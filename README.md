@@ -92,3 +92,15 @@ git branch -M pelajaran1
 git remote add origin git@github.com-silmi:silmi-ayra/nodejs2.git
 git push -u origin pelajaran1
 ```
+
+7. Membuat branch pelajaran2
+
+```
+git branch -M pelajaran2
+git checkout pelajaran2
+git branch
+
+git add .
+git commit -m "response string"
+git push -u origin pelajaran2
+```
