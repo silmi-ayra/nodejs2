@@ -127,3 +127,15 @@ app.listen(PORT, () => console.log(`Server running on: ${ip.address()}: ${PORT}`
 #### 0. Response Server
 GET http://localhost:3500/
 ```
+
+10. Membuat Branch Pelajaran3
+
+```
+git branch -M pelajaran3
+git checkout pelajaran3
+git branch
+
+git add .
+git commit -m "response object"
+git push -u origin pelajaran3
+```

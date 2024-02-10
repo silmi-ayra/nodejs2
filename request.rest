@@ -1,2 +1,15 @@
-#### 0. Response Server
+// request.rest
+### GET / 
 GET http://localhost:3500/
+
+### GET /dtuser
+GET http://localhost:3500/dtuser
+
+### POST /
+POST http://localhost:3500/dtuser
+content-type: application/json
+
+{
+  "email": "dua2@gmail.com",
+  "password": "asdfghj"
+}
