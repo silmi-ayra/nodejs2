@@ -1,0 +1,2 @@
+#### 0. Response Server
+GET http://localhost:3500/

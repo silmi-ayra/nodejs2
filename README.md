@@ -104,3 +104,26 @@ git add .
 git commit -m "response string"
 git push -u origin pelajaran2
 ```
+
+8. Response String
+
+```
+const app = express();
+
+//GET RESPONSE => STRING
+app.get('/', (req, res, next) => {
+  res.send('Response tanpa Router')
+})
+app.use(express.json())
+
+const PORT = 3500
+
+app.listen(PORT, () => console.log(`Server running on: ${ip.address()}: ${PORT}`))
+```
+
+9. Membuat Request.rest
+
+```
+#### 0. Response Server
+GET http://localhost:3500/
+```
