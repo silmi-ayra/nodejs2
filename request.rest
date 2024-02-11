@@ -1,15 +1,36 @@
 // request.rest
-### GET / 
+### 
 GET http://localhost:3500/
 
-### GET /dtuser
+### 1. Get all Data User
 GET http://localhost:3500/dtuser
 
-### POST /
+### 2. Get Data User by id
+GET http://localhost:3500/dtuser/2
+
+### 3. Add new Data User
 POST http://localhost:3500/dtuser
 content-type: application/json
 
 {
-  "email": "dua2@gmail.com",
+  "email": "empat4@gmail.com",
   "password": "asdfghj"
 }
+
+### 4. Update Data User by id
+PUT http://localhost:3500/dtuser/3
+content-type: application/json
+
+{
+  "email": "tiga3@gmail.com",
+  "password": "asdfghj"
+}
+
+### 5. Remove Data User by id
+DELETE http://localhost:3500/dtuser/2
+
+### 6. Find all aktif Data User
+GET http://localhost:3500/dtuser/aktif
+
+### 7. Find all aktif Data User which email contains "dua2@gmail.com"
+GET http://localhost:3500/dtuser?email=dua2@gmail.com
