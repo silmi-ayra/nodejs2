@@ -139,3 +139,59 @@ git add .
 git commit -m "response object"
 git push -u origin pelajaran3
 ```
+
+11. Response Qbject
+
+```
+//ROUTER => GET RESPONSE => OBJECT
+const dtuser1 = {
+  email: "satu1@gmail.com",
+  password: "123456789",
+}
+router.get('/', (req, res, next) => {
+  res.json({
+    message: 'GET Data User Sukses',
+    data: dtuser1
+  })
+})
+// ROUTER => GET RESPONSE => STRING
+router.post('/', (req, res, next) => {
+  res.json({
+    message: 'POST Data User Sukses',
+    data: req.body
+  })
+})
+app.use("/dtuser", router)
+```
+
+12. Membuat Request.rest
+
+```
+// request.rest
+### GET /
+GET http://localhost:3500/
+
+### GET /dtuser
+GET http://localhost:3500/dtuser
+
+### POST /
+POST http://localhost:3500/dtuser
+content-type: application/json
+
+{
+  "email": "dua2@gmail.com",
+  "password": "asdfghj"
+}
+```
+
+14. Membuat Branch Pelajaran4
+
+```
+git branch -M pelajaran4
+git checkout pelajaran4
+git branch
+
+git add .
+git commit -m "route"
+git push -u origin pelajaran4
+```
