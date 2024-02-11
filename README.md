@@ -328,3 +328,15 @@ GET http://localhost:3500/dtuser/aktif
 ### 7. Find all aktif Data User which email contains "dua2@gmail.com"
 GET http://localhost:3500/dtuser?email=dua2@gmail.com
 ```
+
+19. Membuat Branch Pelajaran5
+
+```
+git branch -M pelajaran5
+git checkout pelajaran5
+git branch
+
+git add .
+git commit -m "controller"
+git push -u origin pelajaran5
+```
