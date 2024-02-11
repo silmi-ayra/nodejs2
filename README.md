@@ -195,3 +195,136 @@ git add .
 git commit -m "route"
 git push -u origin pelajaran4
 ```
+
+15. Membuat Tabel
+
+```
+//models/SiswaModelDm.js
+let dbUser = [
+  {
+    id: 1,
+    email: "satu1@gmail.com",
+    password: "123456789",
+    aaktif: true
+  }, {
+    id: 2,
+    email: "dua2@gmail.com",
+    password: "abcdefg",
+    aaktif: false
+  }, {
+    id: 3,
+    email: "tiga3@gmail.com",
+    password: "asdiloveufgh",
+    aaktif: true
+  }
+]
+
+// 1. Find all Data User
+export const getdbUserAll = () => {
+  return dbUser
+}
+```
+
+16. Route
+
+```
+//routes/UserRoute.js
+import express from "express";
+
+const UserRouter = express.Router();
+// 1,7. find all Data User which email contains "dua2@gmail.com"
+UserRouter.get('/', (req, res, next) => {
+  if (req.query.email === undefined) {
+    res.json({ metadata: 'get all Data User' })
+  } else {
+    res.json({ metadata: `get all Data User,email : ${req.query.email}` })
+  }
+})
+// 6. find all aktif Data User
+UserRouter.get('/aktif', (req, res, next) => {
+  res.json({ metadata: 'get all Data User AKTIF' })
+})
+// 2. get Data User by id
+UserRouter.get('/:id', (req, res, next) => {
+  res.json({ metadata: `get Data User by id : ${req.params.id}` })
+})
+// 3. add new Data User
+UserRouter.post('/', (req, res, next) => {
+  res.json({ metadata: "add new Data User", data: req.body })
+})
+// 4. update Data User by id
+UserRouter.put('/:id', (req, res, next) => {
+  res.json({
+    metadata: `update Data User by id :
+${req.params.id}`, data: req.body
+  })
+})
+// 5. remove Data User by id
+UserRouter.delete('/:id', (req, res, next) => {
+  res.json({ metadata: `remove Data User by id : ${req.params.id}` })
+})
+export default UserRouter;
+```
+
+17. Mengubah Index.js
+
+```
+//index.js
+import express from "express";
+import ip from "ip";
+import UserRouter from "./routes/UserRoute.js";
+const app = express();
+
+//GET RESPONSE => STRING
+app.get('/', (req, res, next) => {
+  res.send('Response tanpa Router')
+})
+app.use(express.json())
+
+app.use("/dtuser", UserRouter)
+
+const PORT = 3500
+
+app.listen(PORT, () => console.log(`Server running on: ${ip.address()}: ${PORT}`))
+```
+
+18. Membuat Request.rest
+
+```
+// request.rest
+###
+GET http://localhost:3500/
+
+### 1. Get all Data User
+GET http://localhost:3500/dtuser
+
+### 2. Get Data User by id
+GET http://localhost:3500/dtuser/2
+
+### 3. Add new Data User
+POST http://localhost:3500/dtuser
+content-type: application/json
+
+{
+  "email": "empat4@gmail.com",
+  "password": "asdfghj"
+}
+
+### 4. Update Data User by id
+PUT http://localhost:3500/dtuser/3
+content-type: application/json
+
+{
+  "email": "tiga3@gmail.com",
+  "password": "asdfghj"
+}
+
+### 5. Remove Data User by id
+DELETE http://localhost:3500/dtuser/2
+
+### 6. Find all aktif Data User
+GET http://localhost:3500/dtuser/aktif
+
+### 7. Find all aktif Data User which email contains "dua2@gmail.com"
+GET http://localhost:3500/dtuser?email=dua2@gmail.com
+```
