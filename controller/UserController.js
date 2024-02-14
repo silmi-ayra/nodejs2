@@ -1,5 +1,5 @@
 //controller/UserController
-import { getdbUserAll } from "../models/UserModelDm.js";
+import { getdbUserAll, getdbUserId } from "../models/UserModelDm.js";
 
 const HttpStatus = {
   OK: { code: 200, status: 'OK' },
@@ -42,16 +42,25 @@ export const getPatients = (req, res) => {
   }
 }
 
-// 1, 7. Find all Data User which email contains "dua2@gmail.com"
-// export const getPatients2 = (req, res) => {
-//   if (req.query.email === undefined) {
-//     res.status(HttpStatus.OK.code)
-//       .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get all Data User", []));
-//   } else {
-//     res.status(HttpStatus.OK.code)
-//       .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, `get all Data User, email : ${req.query.email}`, []));
-//   }
-// }
+// 2. Get Data User by id
+export const getPatient = (req, res) => {
+  console.log("req by id");
+  try {
+    const data = getdbUserId(req.params.id)
+    console.log(data);
+    //2a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+    }
+    //2b. Jika Terdapat Isi Data
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get Data User by ID", data));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
 
 // 6. Find all aktif Data User
 export const getPatientsAktif = (req, res) => {
@@ -62,11 +71,6 @@ export const getPatientsAktif = (req, res) => {
 export const createPatient = (req, res) => {
   res.status(HttpStatus.OK.code)
     .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "add new Data User", req.body));
-}
-// 2. Get Data User by id
-export const getPatient = (req, res) => {
-  res.status(HttpStatus.OK.code)
-    .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, `get Data User : ${req.params.id}`, []));
 }
 // 5. Remove Data User by id
 export const deletePatient = (req, res) => {

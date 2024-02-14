@@ -22,3 +22,9 @@ let dbUser = [
 export const getdbUserAll = () => {
   return dbUser
 }
+
+// 2. Get Data User bi id
+export const getdbUserId = (id) => {
+  return dbUser.find((dbUser) =>
+    dbUser.id === parseInt(id))
+}

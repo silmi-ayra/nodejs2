@@ -14,7 +14,7 @@ UserRouter.route('/')
   .post(createPatient);
 UserRouter.route('/aktif')
   // 2. get Data User by id
-  .get(getPatientsAktif)
+  .get(getPatient)
 UserRouter.route('/:id')
   // 3. add new Data User
   .get(getPatient)
