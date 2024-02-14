@@ -446,3 +446,63 @@ git add .
 git commit -m "mockup data > Get All data"
 git push -u origin pelajaran6
 ```
+
+23. Model mockup data (dummy) => READ ALL DATA
+
+```
+//controller/UserController
+import { getdbUserAll } from "../models/UserModelDm.js";
+
+const HttpStatus = {
+  OK: { code: 200, status: 'OK' },
+  CREATED: { code: 201, status: 'CREATED' },
+  NO_CONTENT: { code: 204, status: 'NO_CONTENT' },
+  BAD_REQUEST: { code: 400, status: 'BAD_REQUEST' },
+  NOT_FOUND: { code: 404, status: 'NOT_FOUND' },
+  INTERNAL_SERVER_ERROR: { code: 500, status: 'INTERNAL_SERVER_ERROR' }
+};
+
+function ResponseServer(statusCode, httpStatus, message, data) {
+  return ({
+    timeStamp: new Date().toLocaleString(),
+    response: data,
+    metaData: {
+      status: httpStatus,
+      code: statusCode,
+      message
+    }
+  })
+}
+
+// 1 find all Data User
+export const getPatients = (req, res) => {
+  try {
+    //1. Get all Data User
+    const data = getdbUserAll()
+    console.log(data);
+    //1a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+    }
+    //1b. Jika Terdapat Isi Data
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get all Data User", data));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+```
+
+24. Membuat Branch Pelajaran7
+
+```
+git branch -M pelajaran7
+git checkout pelajaran7
+git branch
+
+git add .
+git commit -m "mockup data > Get data by id"
+git push -u origin pelajaran7
+```
