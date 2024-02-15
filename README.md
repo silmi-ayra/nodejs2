@@ -506,3 +506,49 @@ git add .
 git commit -m "mockup data > Get data by id"
 git push -u origin pelajaran7
 ```
+
+25. Model mockup data (dummy) => GET DATA/id
+
+```
+//controller/UserController
+import { getdbUserAll, getdbUserId } from "../models/UserModelDm.js";
+.............................
+// 2. Get Data User by id
+export const getPatient = (req, res) => {
+  console.log("req by id");
+  try {
+    const data = getdbUserId(req.params.id)
+    console.log(data);
+    //2a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+    }
+    //2b. Jika Terdapat Isi Data
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get Data User by ID", data));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+
+//models/SiswaModelDm.js
+// 2. Get Data User bi id
+export const getdbUserId = (id) => {
+  return dbUser.find((dbUser) =>
+    dbUser.id === parseInt(id))
+}
+```
+
+26. Membuat Branch Pelajaran8
+
+```
+git branch -M pelajaran8
+git checkout pelajaran8
+git branch
+
+git add .
+git commit -m "mockup data > add data"
+git push -u origin pelajaran8
+```
