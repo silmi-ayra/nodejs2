@@ -95,3 +95,4 @@ export const updatePatient = (req, res) => {
   res.status(HttpStatus.OK.code)
     .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, `update Data User : ${req.params.id}`, req.body));
 }
+
