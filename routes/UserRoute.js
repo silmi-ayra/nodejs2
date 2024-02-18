@@ -4,7 +4,7 @@ const UserRouter = express.Router();
 import {
   getPatients,
   createPatient, getPatient,
-  deletePatient, updatePatient
+  deletePatient, updatePatient,
 } from '../controller/UserController.js';
 UserRouter.route('/')
 
@@ -19,8 +19,8 @@ UserRouter.route('/:id')
   // 2. add new Data User
   .get(createPatient)
   // 4. update Data User by id
-  .put(deletePatient)
+  .put(updatePatient)
   // 5. remove Data User by id
-  .delete(updatePatient);
+  .delete(deletePatient);
 
 export default UserRouter;
