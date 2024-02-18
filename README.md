@@ -584,3 +584,15 @@ export const createPatient = (req, res) => {
   }
 }
 ```
+
+26. Membuat Branch Pelajaran9
+
+```
+git branch -M pelajaran9
+git checkout pelajaran9
+git branch
+
+git add .
+git commit -m "mockup data > delete data"
+git push -u origin pelajaran9
+```
