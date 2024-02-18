@@ -1,5 +1,5 @@
 //controller/UserController
-import { getdbUserAll, getdbUserId } from "../models/UserModelDm.js";
+import { getdbUserAll, getdbUserId, createdbUser } from "../models/UserModelDm.js";
 
 const HttpStatus = {
   OK: { code: 200, status: 'OK' },
@@ -62,15 +62,28 @@ export const getPatient = (req, res) => {
   }
 }
 
+// 3. add new Data User
+export const createPatient = (req, res) => {
+  const dataUser = req.body;
+  if (!dataUser.email || !dataUser.password) {
+    return res.status(HttpStatus.BAD_REQUEST.code)
+      .send(ResponseServer(HttpStatus.BAD_REQUEST.code, HttpStatus.BAD_REQUEST.status, "Anda mengirimkan data yang salah", null));
+  }
+  try {
+    const data = createdbUser(dataUser)
+    console.log(data, typeof (data), data.length);
+    res.status(HttpStatus.CREATED.code)
+      .send(ResponseServer(HttpStatus.CREATED.code, HttpStatus.CREATED.status, 'Data User Created', data));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+
 // 6. Find all aktif Data User
 export const getPatientsAktif = (req, res) => {
   res.status(HttpStatus.OK.code)
     .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, " find all aktif Data User", []));
-}
-// 3. Add new Data User
-export const createPatient = (req, res) => {
-  res.status(HttpStatus.OK.code)
-    .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "add new Data User", req.body));
 }
 // 5. Remove Data User by id
 export const deletePatient = (req, res) => {

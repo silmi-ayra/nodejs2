@@ -2,7 +2,7 @@
 import express from "express";
 const UserRouter = express.Router();
 import {
-  getPatients, getPatientsAktif,
+  getPatients,
   createPatient, getPatient,
   deletePatient, updatePatient
 } from '../controller/UserController.js';
@@ -10,17 +10,17 @@ UserRouter.route('/')
 
   // 1,7. find all Data User which email contains "dua2@gmail.com"
   .get(getPatients)
-  // 6. find all aktif Data User
+  // 3. find all aktif Data User
   .post(createPatient);
 UserRouter.route('/aktif')
-  // 2. get Data User by id
+  // 6. get Data User by id
   .get(getPatient)
 UserRouter.route('/:id')
-  // 3. add new Data User
-  .get(getPatient)
+  // 2. add new Data User
+  .get(createPatient)
   // 4. update Data User by id
-  .put(updatePatient)
+  .put(deletePatient)
   // 5. remove Data User by id
-  .delete(deletePatient);
+  .delete(updatePatient);
 
 export default UserRouter;

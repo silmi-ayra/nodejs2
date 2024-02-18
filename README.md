@@ -552,3 +552,35 @@ git add .
 git commit -m "mockup data > add data"
 git push -u origin pelajaran8
 ```
+
+27. Model mockup data (dummy) => CREATE DATA
+
+```
+//models/SiswaModelDm.js
+// 3. add new Data User
+export const createdbUser = (dataUser) => {
+  const id = uuid()
+  dbUser.push({ ...dataUser, id, aktif: true });
+  return id
+}
+
+//controller/UserController
+import { getdbUserAll, getdbUserId, createdbUser } from "../models/UserModelDm.js";
+// 3. add new Data User
+export const createPatient = (req, res) => {
+  const dataUser = req.body;
+  if (!dataUser.email || !dataUser.password) {
+    return res.status(HttpStatus.BAD_REQUEST.code)
+      .send(ResponseServer(HttpStatus.BAD_REQUEST.code, HttpStatus.BAD_REQUEST.status, "Anda mengirimkan data yang salah", null));
+  }
+  try {
+    const data = createdbUser(dataUser)
+    console.log(data, typeof (data), data.length);
+    res.status(HttpStatus.CREATED.code)
+      .send(ResponseServer(HttpStatus.CREATED.code, HttpStatus.CREATED.status, 'Data User Created', data));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+```

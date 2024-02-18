@@ -17,7 +17,10 @@ content-type: application/json
   "password": "asdfghj"
 }
 
-### 4. Update Data User by id
+### 4. Remove Data User by id
+DELETE http://localhost:3500/dtuser/2
+
+### 5. Update Data User by id
 PUT http://localhost:3500/dtuser/3
 content-type: application/json
 
@@ -26,8 +29,6 @@ content-type: application/json
   "password": "asdfghj"
 }
 
-### 5. Remove Data User by id
-DELETE http://localhost:3500/dtuser/2
 
 ### 6. Find all aktif Data User
 GET http://localhost:3500/dtuser/aktif

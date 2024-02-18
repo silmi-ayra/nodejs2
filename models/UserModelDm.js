@@ -1,4 +1,6 @@
 //models/SiswaModelDm.js
+import { v4 as uuid } from 'uuid';
+
 let dbUser = [
   {
     id: 1,
@@ -27,4 +29,11 @@ export const getdbUserAll = () => {
 export const getdbUserId = (id) => {
   return dbUser.find((dbUser) =>
     dbUser.id === parseInt(id))
+}
+
+// 3. add new Data User
+export const createdbUser = (dataUser) => {
+  const id = uuid()
+  dbUser.push({ ...dataUser, id, aktif: true });
+  return id
 }
