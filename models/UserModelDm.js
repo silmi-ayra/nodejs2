@@ -37,3 +37,9 @@ export const createdbUser = (dataUser) => {
   dbUser.push({ ...dataUser, id, aktif: true });
   return id
 }
+
+// 4. Delete Data User by is
+export const deldbUserId = (id) => {
+  dbUser = dbUser.filter((dbUser) => dbUser.id !== id)
+  return dbUser
+}

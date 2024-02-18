@@ -1,5 +1,5 @@
 //controller/UserController
-import { getdbUserAll, getdbUserId, createdbUser } from "../models/UserModelDm.js";
+import { getdbUserAll, getdbUserId, createdbUser, deldbUserId } from "../models/UserModelDm.js";
 
 const HttpStatus = {
   OK: { code: 200, status: 'OK' },
@@ -80,17 +80,33 @@ export const createPatient = (req, res) => {
   }
 }
 
+// 4. Remove Data User by id
+export const deletePatient = (req, res) => {
+  try {
+    const data = getdbUserId(req.params.id);
+    console.log(data);
+    //4a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+    }
+    // 4b. Jika terdapat isi Data 
+    const dataDelete = deldbUserId(req.params.id);
+    console.log(dataDelete);
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "Delete User succes", dataDelete));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+
 // 6. Find all aktif Data User
 export const getPatientsAktif = (req, res) => {
   res.status(HttpStatus.OK.code)
     .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, " find all aktif Data User", []));
 }
-// 5. Remove Data User by id
-export const deletePatient = (req, res) => {
-  res.status(HttpStatus.OK.code)
-    .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, `remove Data User : ${req.params.id}`, []));
-}
-// 4. Update Data User by id
+// 5. Update Data User by id
 export const updatePatient = (req, res) => {
   res.status(HttpStatus.OK.code)
     .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, `update Data User : ${req.params.id}`, req.body));

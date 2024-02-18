@@ -596,3 +596,54 @@ git add .
 git commit -m "mockup data > delete data"
 git push -u origin pelajaran9
 ```
+
+27. Mockup data > delete data
+
+```
+//controller/UserController
+import { getdbUserAll, getdbUserId, createdbUser, deldbUserId } from "../models/UserModelDm.js";
+
+// 4. Remove Data User by id
+export const deletePatient = (req, res) => {
+  try {
+    const data = getdbUserId(req.params.id);
+    console.log(data);
+    //4a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+    }
+    // 4b. Jika terdapat isi Data
+    const dataDelete = deldbUserId(req.params.id);
+    console.log(dataDelete);
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "Delete User succes", dataDelete));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+
+
+
+//models/SiswaModelDm.js
+import { v4 as uuid } from 'uuid';
+
+// 4. Delete Data User by is
+export const deldbUserId = (id) => {
+  dbUser = dbUser.filter((dbUser) => dbUser.id !== id)
+  return dbUser
+}
+```
+
+28. Membuat Branch Pelajaran10
+
+```
+git branch -M pelajaran10
+git checkout pelajaran10
+git branch
+
+git add .
+git commit -m "mockup data > update data"
+git push -u origin pelajaran10
+```
