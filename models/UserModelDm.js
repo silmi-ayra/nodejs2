@@ -43,3 +43,14 @@ export const deldbUserId = (id) => {
   dbUser = dbUser.filter((dbUser) => dbUser.id !== id)
   return dbUser
 }
+
+// 5. update Data User
+export const updatedbUser = (id, dataUser) => {
+  dbUser = dbUser.map(dbUser => {
+    if (dbUser.id == id) {
+      dbUser.nama = dataUser.nama;
+    }
+    return dbUser;
+  })
+  return dbUser
+}

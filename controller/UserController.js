@@ -1,5 +1,5 @@
 //controller/UserController
-import { getdbUserAll, getdbUserId, createdbUser, deldbUserId } from "../models/UserModelDm.js";
+import { getdbUserAll, getdbUserId, createdbUser, deldbUserId, updatedbUser } from "../models/UserModelDm.js";
 
 const HttpStatus = {
   OK: { code: 200, status: 'OK' },
@@ -101,14 +101,36 @@ export const deletePatient = (req, res) => {
   }
 }
 
+// 5. update Data User by id
+export const updatePatient = (req, res) => {
+  const dataUser = req.body;
+  console.log(dataUser);
+  //Cek Request Body
+  if (!dataUser.email || !dataUser.password) {
+    return res.status(HttpStatus.BAD_REQUEST.code)
+      .send(ResponseServer(HttpStatus.BAD_REQUEST.code, HttpStatus.BAD_REQUEST.status, "Anda mengirimkan data yang salah", null));
+  }
+  try {
+    const data = getdbUserId(req.params.id)
+    console.log(data);
+    //5a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", null));
+    }
+    //5b. Jika Terdapat Isi Data
+    const dataUpdate = updatedbUser(req.params.id, dataUser)
+    console.log(dataUpdate);
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "Update data User succes", null));
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  }
+}
+
 // 6. Find all aktif Data User
 export const getPatientsAktif = (req, res) => {
   res.status(HttpStatus.OK.code)
     .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, " find all aktif Data User", []));
 }
-// 5. Update Data User by id
-export const updatePatient = (req, res) => {
-  res.status(HttpStatus.OK.code)
-    .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, `update Data User : ${req.params.id}`, req.body));
-}
-

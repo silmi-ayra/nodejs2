@@ -21,7 +21,7 @@ content-type: application/json
 DELETE http://localhost:3500/dtuser/2
 
 ### 5. Update Data User by id
-PUT http://localhost:3500/dtuser/3
+PUT http://localhost:3500/dtuser/1
 content-type: application/json
 
 {
