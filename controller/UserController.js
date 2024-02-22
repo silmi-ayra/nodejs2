@@ -1,5 +1,5 @@
 //controller/UserController
-import { getdbUserAll, getdbUserId, createdbUser, deldbUserId, updatedbUser } from "../models/UserModelDm.js";
+import { getdbUserAll, getdbUserId, createdbUser, deldbUserId, updatedbUser, getdbUserAktif } from "../models/UserModelDm.js";
 
 const HttpStatus = {
   OK: { code: 200, status: 'OK' },
@@ -131,6 +131,19 @@ export const updatePatient = (req, res) => {
 
 // 6. Find all aktif Data User
 export const getPatientsAktif = (req, res) => {
-  res.status(HttpStatus.OK.code)
-    .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, " find all aktif Data User", []));
+  try {
+    const data = getdbUserAktif()
+    console.log(data);
+    //6a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data))
+    }
+    //6b. Jila Terdapat Isi Data 
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get Data User Aktif", data))
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occured ${error.message}`))
+  }
 }

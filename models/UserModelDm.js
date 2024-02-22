@@ -54,3 +54,8 @@ export const updatedbUser = (id, dataUser) => {
   })
   return dbUser
 }
+
+// 6. Find All Aktif Data User
+export const getdbUserAktif = () => {
+  return dbUser.filter((dbUser) => dbUser.aktif === true)
+}

@@ -706,3 +706,47 @@ git add .
 git commit -m "mysql data > Get All data/aktif"
 git push -u origin pelajaran11
 ```
+
+31. Model mockup data (dummy) => GET DATA/aktif
+
+```
+//models/SiswaModelDm.js
+// 6. Find All Aktif Data User
+export const getdbUserAktif = () => {
+  return dbUser.filter((dbUser) => dbUser.aktif === true)
+}
+
+
+
+//controller/UserController
+// 6. Find all aktif Data User
+export const getPatientsAktif = (req, res) => {
+  try {
+    const data = getdbUserAktif()
+    console.log(data);
+    //6a. Jika Data Kosong
+    if (!data || data.length === 0) {
+      return res.status(HttpStatus.OK.code)
+        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data))
+    }
+    //6b. Jila Terdapat Isi Data
+    return res.status(HttpStatus.OK.code)
+      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get Data User Aktif", data))
+  } catch (error) {
+    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occured ${error.message}`))
+  }
+}
+```
+
+32. Membuat Branch Pelajaran12
+
+```
+git branch -M pelajaran12
+git checkout pelajaran12
+git branch
+
+git add .
+git commit -m "Model mockup data (dummy) => GET DATA/alamat=semarang"
+git push -u origin pelajaran12
+```
