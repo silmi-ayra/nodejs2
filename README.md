@@ -747,6 +747,6 @@ git checkout pelajaran12
 git branch
 
 git add .
-git commit -m "Model mockup data (dummy) => GET DATA/alamat=semarang"
+git commit -m "Model mockup data (dummy) => GET DATA/email=satu1@gmail"
 git push -u origin pelajaran12
 ```

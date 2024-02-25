@@ -1,5 +1,5 @@
 //controller/UserController
-import { getdbUserAll, getdbUserId, createdbUser, deldbUserId, updatedbUser, getdbUserAktif } from "../models/UserModelDm.js";
+import { getdbUserAll, getdbUserId, createdbUser, deldbUserId, updatedbUser, getdbUserAktif, getdbUserAllCari } from "../models/UserModelDm.js";
 
 const HttpStatus = {
   OK: { code: 200, status: 'OK' },
@@ -22,23 +22,39 @@ function ResponseServer(statusCode, httpStatus, message, data) {
   })
 }
 
-// 1 find all Data User 
+// 1,7. Find all Data User which email contains "satu1@gmail.com"
 export const getPatients = (req, res) => {
-  try {
-    //1. Get all Data User
-    const data = getdbUserAll()
-    console.log(data);
-    //1a. Jika Data Kosong
-    if (!data || data.length === 0) {
+  if (req.query.email === undefined) {
+    try {
+      //1. Get all Data User
+      const data = getdbUserAll()
+      console.log(data);
+      //1a. Jika Data Kosong
+      if (!data || data.length === 0) {
+        return res.status(HttpStatus.OK.code)
+          .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+      }
+      //1b. Jika Terdapat Isi Data
       return res.status(HttpStatus.OK.code)
-        .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NO_CONTENT.status, "tidak ada Data User", data));
+        .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get all Data User", data));
+    } catch (error) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
+        .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
     }
-    //1b. Jika Terdapat Isi Data
-    return res.status(HttpStatus.OK.code)
-      .send(ResponseServer(HttpStatus.OK.code, HttpStatus.OK.status, "get all Data User", data));
-  } catch (error) {
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR.code)
-      .send(ResponseServer(HttpStatus.INTERNAL_SERVER_ERROR.code, HttpStatus.INTERNAL_SERVER_ERROR.status, `Error occurred ${error.message}`));
+  } else {
+    // 7. Get all Data User which email contains "satu1@gmail.com" and
+    try {
+      //7. Get all Data User which email contains "satu1@gmail.com"
+      const data = getdbUserAllCari(req.query.email)
+      //7a. Jika Data Kosong 
+      console.log(data, typoef(data), data.length);
+      if (!data || data.length === 0) {
+        return res.status(HttpStatus.OK.code)
+          .send(ResponseServer(HttpStatus.NO_CONTENT.code, HttpStatus.NOT_FOUND.status, "tidak ada Data User", data));
+      }
+      //7b. Jika Terdapat isi Data
+      res.status(HttpStatus.OK.code)
+    }
   }
 }
 

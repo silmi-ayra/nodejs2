@@ -59,3 +59,8 @@ export const updatedbUser = (id, dataUser) => {
 export const getdbUserAktif = () => {
   return dbUser.filter((dbUser) => dbUser.aktif === true)
 }
+
+// 7. find all Data User Cari Email
+export const getdbUserAllCari = (cari) => {
+  return dbUser.filter((dbUser) => dbUser.email.toUpperCase() === cari.toUpperCase())
+}
